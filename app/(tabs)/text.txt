@@ -1,0 +1,49 @@
+import { StyleSheet } from 'react-native';
+import TaskList from '@/components/ui/TaskList'; // Ensure TaskList is a valid named or default export
+import { useState, useEffect } from 'react';
+import { View, Text } from 'react-native';
+
+export default function TaskScreen() {
+  const [task, setTask] = useState([]);
+
+  useEffect(() => {
+    const response = [
+      {
+        "_id": "TASK_ID_1",
+        "userId": "674ab742ead0a08bab8856c2",
+        "taskTitle": "Complete React Native Project",
+        "description": "Finish the front-end and integrate all APIs.",
+        "dueDate": "2024-12-01T00:00:00.000Z",
+        "priority": "high",
+        "status": "pending",
+        "createdAt": "2024-11-26T00:00:00.000Z"
+      },
+      {
+        "_id": "TASK_ID_2",
+        "userId": "674ab742ead0a08bab8856c2",
+        "taskTitle": "Team Meeting",
+        "description": "Discuss project progress with the team.",
+        "dueDate": "2024-11-27T10:00:00.000Z",
+        "priority": "medium",
+        "status": "pending",
+        "createdAt": "2024-11-26T00:00:00.000Z"
+      }
+      // Additional tasks...
+    ];
+
+    // Simulate fetching data
+    setTask(response);
+  }, []); // The empty dependency array ensures this runs only once
+
+  return (
+    <View style={styles.container}>
+      <Text style={styles.header}>Your Tasks</Text>
+      <TaskList tasks={task} />
+    </View>
+  );
+}
+
+const styles = StyleSheet.create({
+  container: { flex: 1, padding: 16,backgroundColor:'lightblue' },
+  header: { fontSize: 24, fontWeight: 'bold', marginBottom: 16 },
+});

@@ -1,0 +1,74 @@
+import React,{useState,useEffect} from "react";
+import { View,Text,StyleSheet } from "react-native";
+import { Calendar } from "react-native-calendars";
+import axios from "axios";
+const userId ='67573c10249083a2becefadb'
+const CalendarScreen = () => {
+
+
+  // this is how markedDates in calender generally works
+  // markedDates = {
+  //   "2024-12-14": { marked: true, dotColor: "blue" }
+  // };
+  
+const [mdate,setmdate]=useState({})
+const [moodcolor,setmoodcolor]=useState({})
+  useEffect(()=>{
+    const fetchmood=async()=>{
+      const response =await axios.get(`http://192.168.1.47:3000/api/moods/${userId}`)
+      console.log(response.data)
+      const mood = response.data[1].mood
+      const mood2 = response.data[0].mood
+      // console.log(mood)
+      //  this is an array
+      console.log(mood)
+      console.log(mood2)
+      // const date = response.data[0].date
+      // console.log(date.split('T')[0])
+      // setmdate(date.split('T')[0])
+      // setmoodcolor(getMoodcolor(mood))
+      const moodEntries = response.data;
+
+        // Create markedDates object
+        const formattedDates = moodEntries.reduce((acc, moodEntry) => {
+          const date = moodEntry.date.split("T")[0]; // Extract 'YYYY-MM-DD'
+          const moodColor = getMoodcolor(moodEntry.mood);
+          acc[date] = { marked: true, dotColor: moodColor };
+          return acc;
+        }, {});
+      setmdate(formattedDates)
+      
+    }
+    fetchmood()
+  },[])
+// mood color function
+const getMoodcolor=(mood)=>{
+  switch(mood){
+    case "happy":
+       return 'red';
+    case "sad":
+       return 'blue';
+    case "neutral":
+       return 'green';
+  }
+}
+
+  return(
+    <View style={styles.container}>
+    <Calendar markedDates={mdate}/>
+    {/* <Text>{moodcolor}</Text> */}
+    <Text>Marked Moods: {JSON.stringify(mdate)}</Text>
+    </View>
+  );
+}
+const styles = StyleSheet.create({
+  container: {
+    flex: 1,
+    justifyContent: "center",
+    alignItems: "center",
+  },
+});
+
+
+
+export default CalendarScreen
