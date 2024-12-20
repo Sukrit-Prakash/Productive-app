@@ -19,7 +19,7 @@ const AddTask = () => {
     }
 
     try {
-      const response = await axios.post('http://192.168.1.47:3000/api/tasks', {
+      const response = await axios.post('http://192.168.1.9:3000/api/tasks', {
         userId,
         taskTitle,
         description,

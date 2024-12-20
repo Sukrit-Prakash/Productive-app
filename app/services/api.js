@@ -1,6 +1,6 @@
 import axios from 'axios';
 
-const API_BASE_URL = 'http://localhost:3000/api'; // Replace with your backend URL
+const API_BASE_URL = 'http://192.168.1.9:3000/api'; // Replace with your backend URL
 
 // Create Axios instance
 const apiClient = axios.create({
@@ -15,15 +15,18 @@ export const registerUser = async (userData) => {
   const response = await apiClient.post('/users/register', userData);
   return response.data;
 };
-
+      // const response = await axios.post('http://192.168.1.9:3000/api/users/login', {
+      //   email,
+      //   password,
+      // });
 export const loginUser = async (credentials) => {
   const response = await apiClient.post('/users/login', credentials);
-  return response.data;
+  return response;
 };
 
 export const getUserTasks = async (userId) => {
   const response = await apiClient.get(`/tasks/${userId}`);
-  return response.data;
+  return response;
 };
 
 export const createTask = async (taskData) => {

@@ -14,7 +14,7 @@ export default function HomeScreen() {
   useEffect(() => {
     const fetchMoods = async () => {
       try {
-        const response = await axios.get(`http://192.168.1.47:3000/api/moods/${userId}`);
+        const response = await axios.get(`192.168.1.9:3000/api/moods/${userId}`);
         const moodData = response.data.reduce((acc, mood) => {
           acc[mood.date] = { marked: true, dotColor: getMoodColor(mood.mood) }; // Ensure date is in YYYY-MM-DD format
           return acc;
@@ -31,7 +31,7 @@ export default function HomeScreen() {
   // Fetch tasks for a specific date
   const fetchTasks = async (date) => {
     try {
-      const response = await axios.get(`http://192.168.1.47:3000/api/tasks/${userId}?date=${date}`);
+      const response = await axios.get(`http://192.168.1.9:3000/api/tasks/${userId}?date=${date}`);
       setTasks(response.data); // Expect tasks filtered by the API
     } catch (error) {
       console.log('Error fetching tasks:', error);

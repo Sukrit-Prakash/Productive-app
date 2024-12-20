@@ -6,6 +6,7 @@ import axios from 'axios';
 import { useLocalSearchParams,useGlobalSearchParams } from 'expo-router';
 import { useSearchParams } from 'expo-router';
 import { useRouter } from 'expo-router';
+import {getUserTasks}from '../services/api'
 export default function TaskScreen() {
   // const userId = "674ab742ead0a08bab8856c2"; // Fixed: Assigned directly
   // const { userId } = route.params;
@@ -18,13 +19,12 @@ const router = useRouter()
   useEffect(() => {
     const fetchTask = async () => {
       try {
-        // Replace localhost with the appropriate IP address
-        // const response = await axios.get(`http://192.168.1.41:3000/api/tasks/${userId}`);
-        const response = await axios.get(`http://192.168.1.47:3000/api/tasks/${userId}`);
-        
+        // Replace localhost with the appropriate IP address IS MUST
+        // const response = await axios.get(`http://192.168.1.9:3000/api/tasks/${userId}`);
+        // const response = getUserTasks(userId) ERROR
+        const response = await getUserTasks(userId);
         // const response = await axios.get('http://192.168.1.41:8081/api/tasks/674ab742ead0a08bab8856c2');
-        // const response = await axios.get('http://10.0.2.2:3000/api/tasks/674ab742ead0a08bab8856c2');
-        // const response = await axios.get('http://127.0.0.1:3000/api/tasks/674ab742ead0a08bab8856c2');
+        // Also an error
 
         // const response = await axios.get('http://192.168.21.1:3000/api/tasks/674ab742ead0a08bab8856c2');
         // console.log(response)

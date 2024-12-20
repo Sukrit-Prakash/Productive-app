@@ -11,7 +11,7 @@ const RegisterScreen = () => {
   const router = useRouter();
   const handleRegister = async () => {
     try {
-      const response = await axios.post('http://192.168.1.41:3000/api/users/register', {
+      const response = await axios.post('http://192.168.1.9:3000/api/users/register', {
         username,
         email,
         password,

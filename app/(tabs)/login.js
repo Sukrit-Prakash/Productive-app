@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { View, Text, TextInput, TouchableOpacity, StyleSheet } from 'react-native';
 import axios from 'axios';
 import { useRouter } from 'expo-router';
+import { loginUser } from '../services/api';
 const LoginScreen = ({ navigation }) => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -11,10 +12,12 @@ const LoginScreen = ({ navigation }) => {
   const handleLogin = async () => {
     try {
       // sometimes the ip changes please make sure that it is working
-      const response = await axios.post('http://192.168.1.47:3000/api/users/login', {
-        email,
-        password,
-      });
+      // const response = await axios.post('http://192.168.1.9:3000/api/users/login', {
+      //   email,
+      //   password,
+      // });
+      const response = await loginUser({email, password});
+
       // const { userId } = response.data.userId; // Ensure the API returns userId on successful login
       // const userId = response.data.userId; 
       const userId = response.data._id;
