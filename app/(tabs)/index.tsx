@@ -1,35 +1,61 @@
-import { Image, StyleSheet, Platform } from 'react-native';
+import React, { useState, useEffect } from 'react';
+import { StyleSheet, Text, View } from 'react-native';
 
 import { HelloWave } from '@/components/HelloWave';
 import ParallaxScrollView from '@/components/ParallaxScrollView';
 import { ThemedText } from '@/components/ThemedText';
 import { ThemedView } from '@/components/ThemedView';
-// import AppNavigator from '../navigation/AppNavigator';
-// import App from '../app'
+
 export default function HomeScreen() {
+  // const [quotes, setQuotes] = useState([]); // State to store quotes
+  const [quotes, setQuotes] = useState();
+  const [loading, setLoading] = useState(true); // State to handle loading state
+
+  // Fetch quotes when the component mounts
+  useEffect(() => {
+    fetch('https://dummyjson.com/quotes/random')
+      .then((res) => res.json())
+      .then((data) => {
+        setQuotes(data.quote); // Assuming 'quotes' is the key holding the array
+        console.log(quotes)
+        setLoading(false); // Set loading to false after fetching data
+      })
+      .catch((error) => {
+        console.error(error);
+        setLoading(false); // Handle any errors and stop loading
+      });
+  }, []); // Empty dependency array ensures this runs only once, after the component mounts
+
+  if (loading) {
+    return <Text>Loading...</Text>; // Render loading text until data is fetched
+  }
+
   return (
-    <>
-     {/* <AppNavigator/> */}
-     {/* nested navigator error */}
-    </>
+    <ThemedView style={styles.container}>
+      <ThemedText style={styles.title}>Quotes</ThemedText>
+      <View >
+        <Text style={styles.quoteText}>{quotes}</Text></View>
+    </ThemedView>
   );
 }
 
 const styles = StyleSheet.create({
-  titleContainer: {
-    flexDirection: 'row',
-    alignItems: 'center',
-    gap: 8,
+  container: {
+    flex: 1,
+    justifyContent: 'center',
+    padding: 16,
+    backgroundColor:''
   },
-  stepContainer: {
-    gap: 8,
+  title: {
+    fontSize: 24,
+    fontWeight: 'bold',
+    marginBottom: 16,
+  },
+  quoteContainer: {
     marginBottom: 8,
   },
-  reactLogo: {
-    height: 178,
-    width: 290,
-    bottom: 0,
-    left: 0,
-    position: 'absolute',
+  quoteText: {
+    fontSize: 16,
+    color: 'lightgreen',
   },
 });
